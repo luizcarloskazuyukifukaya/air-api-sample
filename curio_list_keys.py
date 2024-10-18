@@ -30,84 +30,70 @@ logger.debug(f"Current Logging Level is {level}")
 
 ## Wasabi AiR specific URL
 # -----------------------------------------------
-# Search API in Wasabi AiR
-# https://docs.wasabi.com/docs/search-api
+# Listing All Keys for a User
+# https://docs.wasabi.com/docs/api-keys
 # -----------------------------------------------
 
 ############################################################################# 
-# Search the metadata in Wasabi AiR
+# Listing All Keys for a User
 # -----------------------------------------
-# Search contents based on the metadata
+# List for all key for a user what is associated with the access key
 # =========================================
 # ******************* 
 #  Parameters
 # *******************
 # Input parameter
 # NONE
-# dict 
-# {
-#   "query": "",                             # string    (MANDATORY: search query)
-# }
 # ******************* 
 #  Return value
 # *******************
 # SUCCESS
 # {
-# TODO
-#   "results": []
+#     "api-keys": [
+#         {
+#             "id": "abc123",
+#             "jwt": "APIKEY",
+#             "active": true,
+#             "user_id": "591481bf1940f20c341b9386a9a192f4",
+#             "created_at": "2017-05-31T20:56:04.002433Z",
+#             "updated_at": "2017-05-31T20:56:04.002433Z"
+#         },
+#         {
+#             "id": "abc124",
+#             "jwt": "APIKEY",
+#             "active": true,
+#             "user_id": "591481bf1940f20c341b9386a9a192f4",
+#             "created_at": "2017-05-31T20:56:04.002433Z",
+#             "updated_at": "2017-05-31T20:56:04.002433Z"
+#         },
+#         {
+#             "id": "abc125",
+#             "jwt": "APIKEY",
+#             "active": false,
+#             "user_id": "591481bf1940f20c341b9386a9a192f4",
+#             "created_at": "2017-05-31T20:56:04.002433Z",
+#             "updated_at": "2017-05-31T20:56:04.002433Z"
+#         }
+#     ]
 # }
 # FAIL
 # {} # NULL (dictionary)
 #
-# =========================================
-# Example:
-#   searchQuery = {
-#       "query": "ship",
-#   }
-#   result = search_query(**searchQuery)
-#
 ############################################################################# 
-def curio_search(**searchQuery):
-    query = {
-        "query": "",                             # string    (MANDATORY: search query)
-        }
+def curio_list_keys():
 
     response = {}
-    # check mandatory information required    
-    # searchQuery (dictionary)
-    # searchQuery['AcctName'] (Mandatory)
-    if "query" in searchQuery:
-        query["query"] = searchQuery["query"]
-    else:
-        # Missing mandatory parameters
-        return response
-            
-    # check if all given parameters are correct or not
-    hasUnknownParameter = False
-    keyList = list(searchQuery.keys())
-    for key in keyList:
-        logger.debug(f"{key} is passed as a parameter")
-        if key in searchQuery:
-            # found matching parameter
-            logger.debug(f"Matching parameter : {key} = {searchQuery[key]}")
-            # query corresponding key's value is overwritten by the given parameter key's value
-            query[key] = searchQuery[key]
-        else:
-            # Unknown parameter found
-            logger.error(f"Wrong parameter is given.: {key} = {searchQuery[key]}")
-            hasUnknownParameter = True
-            break                        
-    
-    if hasUnknownParameter != True:
-        logger.debug(f" Input parameter : {query}")
-        # Call put_accounts()    
-        response = search_query(query)
-        logger.debug(f"search_query(query) called")
+
+    logger.debug(f" Input parameter : NONE")
+    # Call list_keys()    
+    response = list_keys()
+    logger.debug(f"list_keys()) called")
+
     return response
 
-# search_query
-# Call Wasabi AiR API for search
-def search_query(q):
+# list_keys
+# Call Wasabi AiR API for listing keys
+def list_keys():
 
     from curio_config import parse_conf # type: ignore
 
@@ -134,30 +120,19 @@ def search_query(q):
     # Content-Type: application/json
     # X-Wasabi-Service: partner
 
-    #PUT /v1/accounts
-    url = "{}/api/data/search".format(url)
+    #GET /api/data/api-keys
+    url = "{}/api/data/api-keys".format(url)
 
-    logger.debug(f"PUT {url}")
+    logger.debug(f"GET {url}")
     logger.info(f"Target URL is {url}")
 
-    # HTTPS PUT
-    # data = acct
-    # acct is confirmed to have all keys and values required to create the sub-account    
-    logger.debug(f"HTTPS PUT Request start from here .............. ")
+    # HTTPS GET
+    logger.debug(f"HTTPS GET Request start from here .............. ")
     logger.debug(f"URL =  {url}")
     logger.debug(f"headers =  {api_head}")
-    logger.debug(f"data =  {q}")
+    logger.debug(f"data =  NONE")
 
-    ## PUT request
-    ## requests.put(url, params={key: value}, args)
-    ## requests.put( url, headers=api_head, data=q);
-    # ********* requests.put only works with 'json=q' *************
-
-    # ********** THIS WORKS ALSO *************************************
-    #r = requests.put( url, headers=api_head, json=q);
-
-    logger.debug(f"data JSON =  {json.dumps(q)}")
-    r = requests.put( url, headers=api_head, data=json.dumps(q))
+    r = requests.get( url, headers=api_head)
 
     ## Response status code
     logger.info(f"status: {r.status_code}") ; 
@@ -183,18 +158,12 @@ def search_query(q):
 
 # for the execution of this script only
 def main():
-        
-    param = {
-        "query": "ship",                              # string    (MANDATORY: search query)
-        }
-
-    logger.debug(f"Search query = {param['query']}")  
     
-    logger.debug(f"Calling curio_search() ...")
+    logger.debug(f"Calling curio_list_keys() ...")
 
-    response = curio_search(**param)
+    response = curio_list_keys()
 
-    logger.debug(f"curio_search() completed.")  
+    logger.debug(f"curio_list_keys() completed.")  
 
     ## return value 
     logger.debug(f"{response}");  
