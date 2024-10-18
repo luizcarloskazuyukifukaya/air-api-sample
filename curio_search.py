@@ -3,6 +3,15 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
+from curio_tools import rest_request
+from curio_tools import (
+    curio_get_data,
+    curio_post_data,
+    curio_put_data,
+    curio_patch_data,
+    curio_delete_data,
+)
+
 import requests
 import json
 
@@ -34,21 +43,22 @@ logger.debug(f"Current Logging Level is {level}")
 # https://docs.wasabi.com/docs/search-api
 # -----------------------------------------------
 
-############################################################################# 
+
+#############################################################################
 # Search the metadata in Wasabi AiR
 # -----------------------------------------
 # Search contents based on the metadata
 # =========================================
-# ******************* 
+# *******************
 #  Parameters
 # *******************
 # Input parameter
 # NONE
-# dict 
+# dict
 # {
 #   "query": "",                             # string    (MANDATORY: search query)
 # }
-# ******************* 
+# *******************
 #  Return value
 # *******************
 # SUCCESS
@@ -66,137 +76,73 @@ logger.debug(f"Current Logging Level is {level}")
 #   }
 #   result = search_query(**searchQuery)
 #
-############################################################################# 
-def curio_search(**searchQuery):
-    query = {
-        "query": "",                             # string    (MANDATORY: search query)
-        }
+#############################################################################
+def curio_search(q):
+
+    # POST /api/data/search
+    api_method = "POST"
+    api_url = "/api/data/search"
 
     response = {}
-    # check mandatory information required    
-    # searchQuery (dictionary)
-    # searchQuery['AcctName'] (Mandatory)
-    if "query" in searchQuery:
-        query["query"] = searchQuery["query"]
+
+    query = {
+        "query": "",  # string    (MANDATORY: search query)
+        "page": 0,
+        "limit": 25,
+        "hit_counts": {},
+    }
+    
+    if "query" in q:
+        query["query"] = q["query"]
     else:
         # Missing mandatory parameters
         return response
-            
-    # check if all given parameters are correct or not
-    hasUnknownParameter = False
-    keyList = list(searchQuery.keys())
-    for key in keyList:
-        logger.debug(f"{key} is passed as a parameter")
-        if key in searchQuery:
-            # found matching parameter
-            logger.debug(f"Matching parameter : {key} = {searchQuery[key]}")
-            # query corresponding key's value is overwritten by the given parameter key's value
-            query[key] = searchQuery[key]
-        else:
-            # Unknown parameter found
-            logger.error(f"Wrong parameter is given.: {key} = {searchQuery[key]}")
-            hasUnknownParameter = True
-            break                        
-    
-    if hasUnknownParameter != True:
-        logger.debug(f" Input parameter : {query}")
-        # Call put_accounts()    
-        response = search_query(query)
-        logger.debug(f"search_query(query) called")
+
+    logger.debug(f" Input parameter : {query}")
+
+    response = curio_post_data(url=api_url, body=query)
+
+    logger.debug(f"post_data({api_url}) called")
+
     return response
 
-# search_query
-# Call Wasabi AiR API for search
-def search_query(q):
 
-    from curio_config import parse_conf # type: ignore
+# # Example usage
+# @rest_request(method='GET')
+# def curio_get_data(url):
+#     pass
 
-    # read CURIO config file (~/.wasabi/curio.conf)
-    # TODO
-    api_conf = parse_conf("wasabi")
+# @rest_request(method='POST')
+# def curio_post_data(url, body):
+#     pass
 
-    url = api_conf['endpoint']
-    # url = 'https://us.metafarm.dev'
-    ## API Key value
-    bearer_token = api_conf['api_key']
-    
-    # logger.debug(f"API Key is {bearer_token}")
+# # Using the decorated functions
+# get_result = get_data(url='/api/data/user-keys')
+# if curio_get_result:
+#     print("GET Result:", get_result)
 
-    ## Request Header with API Key Authentication
-    #Authorization: Bearer {{token}}
-    auth_bearer = 'Bearer {}'.format(bearer_token)
-    api_head = {
-        'Authorization': auth_bearer,
-        'Content-Type': 'application/json',
-        # 'X-Wasabi-Service': 'partner',
-    }
-    # "Content-Type: application/json; charset=utf-8" # request( ,json=data )
-    # Content-Type: application/json
-    # X-Wasabi-Service: partner
+# post_result = post_data(url='/api/data/search', body={'key': 'value'})
+# if curio_post_result:
+#     print("POST Result:", post_result)
 
-    #PUT /v1/accounts
-    url = "{}/api/data/search".format(url)
-
-    logger.debug(f"PUT {url}")
-    logger.info(f"Target URL is {url}")
-
-    # HTTPS PUT
-    # data = acct
-    # acct is confirmed to have all keys and values required to create the sub-account    
-    logger.debug(f"HTTPS PUT Request start from here .............. ")
-    logger.debug(f"URL =  {url}")
-    logger.debug(f"headers =  {api_head}")
-    logger.debug(f"data =  {q}")
-
-    ## PUT request
-    ## requests.put(url, params={key: value}, args)
-    ## requests.put( url, headers=api_head, data=q);
-    # ********* requests.put only works with 'json=q' *************
-
-    # ********** THIS WORKS ALSO *************************************
-    #r = requests.put( url, headers=api_head, json=q);
-
-    logger.debug(f"data JSON =  {json.dumps(q)}")
-    r = requests.put( url, headers=api_head, data=json.dumps(q))
-
-    ## Response status code
-    logger.info(f"status: {r.status_code}") ; 
-
-    ## Response RAW
-    logger.debug(f"{r.reason}");  
-    logger.debug(f"{r.text}");
-      
-    # logger.debug(f"{r.json()}");  
-    # logger.debug(f"{type(r.json())}");  
- 
-    #print(f"{r.json()}");  
-    #print(f"{type(r.json())}");  
-    ## Sub-Accounts Information
-    response = {} # default NULL
-    if r.status_code == 200:
-        response = r.json()
-        logger.debug("===================================================================================");
-        logger.debug(response);
-        logger.debug("-----------------------------------------------------------------------------------");
-        logger.info(f"Response: {response}");
-    return response
 
 # for the execution of this script only
 def main():
-        
+    # search query
     param = {
-        "query": "ship",                              # string    (MANDATORY: search query)
-        }
+        "query": "wasabi log",  # string    (MANDATORY: search query)
+        "page": 0,
+        "limit": 25,
+        "hit_counts": {},
+    }
 
-    logger.debug(f"Search query = {param['query']}")  
-    
     logger.debug(f"Calling curio_search() ...")
 
-    response = curio_search(**param)
+    response = curio_search(param)
 
     logger.debug(f"curio_search() completed.")  
 
-    ## return value 
+    ## return value
     logger.debug(f"{response}");  
     logger.debug(f"{type(response)}");  
 

@@ -4,7 +4,13 @@
 # ======================================
 
 from curio_tools import rest_request
-from curio_tools import curio_get_data, curio_post_data, curio_put_data, curio_delete_data
+from curio_tools import (
+    curio_get_data,
+    curio_post_data,
+    curio_put_data,
+    curio_patch_data,
+    curio_delete_data,
+)
 
 import requests
 import json
@@ -37,17 +43,17 @@ logger.debug(f"Current Logging Level is {level}")
 # https://docs.wasabi.com/docs/api-keys
 # -----------------------------------------------
 
-############################################################################# 
+#############################################################################
 # Listing All Keys for a User
 # -----------------------------------------
 # List for all key for a user what is associated with the access key
 # =========================================
-# ******************* 
+# *******************
 #  Parameters
 # *******************
 # Input parameter
 # NONE
-# ******************* 
+# *******************
 #  Return value
 # *******************
 # SUCCESS
@@ -82,7 +88,7 @@ logger.debug(f"Current Logging Level is {level}")
 # FAIL
 # {} # NULL (dictionary)
 #
-############################################################################# 
+#############################################################################
 def curio_list_keys():
 
     #GET /api/data/api-keys

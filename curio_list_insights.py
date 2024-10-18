@@ -4,7 +4,13 @@
 # ======================================
 
 from curio_tools import rest_request
-from curio_tools import curio_get_data, curio_post_data, curio_put_data, curio_delete_data
+from curio_tools import (
+    curio_get_data,
+    curio_post_data,
+    curio_put_data,
+    curio_patch_data,
+    curio_delete_data,
+)
 
 import requests
 import json
