@@ -1,0 +1,6 @@
+[default]
+endpoint_url = https://us.metafarm.dev
+api_key_value = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+[wasabi]
+endpoint_url = https://us.metafarm.dev
+api_key_value = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

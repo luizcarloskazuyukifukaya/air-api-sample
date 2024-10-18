@@ -1,5 +1,5 @@
 # Wasabi
-.wasabi/
+.wasabi/curio.conf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
