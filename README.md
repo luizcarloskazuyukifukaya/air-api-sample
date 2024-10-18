@@ -1,4 +1,4 @@
-#Wasabi AiR SDK for Python
+# Wasabi AiR SDK for Python
 
 This is a sample of python code that can be positioned as a Wasabi AiR SDK for Python. It implements a high-level function wrapping the REST API call with a simple function call.
 
