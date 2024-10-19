@@ -86,9 +86,94 @@ logger.debug(f"Current Logging Level is {level}")
 #############################################################################
 def curio_list_audit():
 
-    #GET /api/data/api-keys
+    # GET /api/data/api-keys
     api_method = "GET"
     api_url = "/api/data/audit"
+
+    response = {}
+
+    logger.debug(f" Input parameter : NONE")
+
+    response = curio_get_data(url=api_url)
+
+    logger.debug(f"get_data({api_url}) called")
+
+    return response
+
+
+#############################################################################
+# Retrieving a Specific Audit Event
+# -----------------------------------------
+# Retrieving a Specific Audit Event by the event id
+# =========================================
+# *******************
+#  Parameters
+# *******************
+# Input parameter
+# id: event id
+# *******************
+#  Return value
+# *******************
+# SUCCESS
+# {
+#     "id": "59e12813db0201953dfe7214c4750e88",
+#     "user_id": "59790c0f1ab46239e59188bed540bfc7",
+#     "action_key": "enable",
+#     "target_kind": "feature",
+#     "target_id": "disabled_live_harvesting",
+#     "time": "2017-10-13T20:54:43.14061Z",
+# }
+# FAIL
+# {} # NULL (dictionary)
+#
+#############################################################################
+def curio_retrieve_an_audit(id):
+
+    # GET /api/data/audit/{id}
+    api_method = "GET"
+    api_url = "/api/data/audit/{}".format(id)
+
+    response = {}
+
+    logger.debug(f" Input parameter : {id}")
+
+    response = curio_get_data(url=api_url)
+
+    logger.debug(f"get_data({api_url}) called")
+
+    return response
+
+
+#############################################################################
+# Listing Available Target Kinds and Action Keys
+# -----------------------------------------
+# Listing Available Target Kinds and Action Keys
+# =========================================
+# *******************
+#  Parameters
+# *******************
+# Input parameter
+# NONE
+# *******************
+#  Return value
+# *******************
+# SUCCESS
+# {
+#     "target_kinds": [
+#         {"name": "authenticate", "action_keys": ["login", "update-password"]},
+#         {"name": "feature", "action_keys": ["enable"]},
+#         {"name": "group", "action_keys": ["create"]},
+#     ]
+# }
+# FAIL
+# {} # NULL (dictionary)
+#
+#############################################################################
+def curio_list_filters():
+
+    # GET /api/data/audit/filters
+    api_method = "GET"
+    api_url = "/api/data/audit/filters"
 
     response = {}
 
@@ -118,19 +203,55 @@ def curio_list_audit():
 # if curio_post_result:
 #     print("POST Result:", post_result)
 
-
-# for the execution of this script only
-def main():
-    
+# Usage example
+def list_audit():
     logger.debug(f"Calling curio_list_keys() ...")
 
     response = curio_list_audit()
 
-    logger.debug(f"curio_list_keys() completed.")  
+    logger.debug(f"curio_list_keys() completed.")
 
-    ## return value 
-    logger.debug(f"{response}");  
-    logger.debug(f"{type(response)}");  
+    ## return value
+    logger.debug(f"{response}")
+    logger.debug(f"{type(response)}")
+
+def retrieve_a_audit():
+
+    # retrieve the fist event from the response and request details
+    event_id = ""
+    r = curio_list_audit()
+
+    if len(r):
+        event_id = r["audit_events"][0]["id"]
+        logger.debug(f"Calling curio_retrieve_an_audit({event_id}) ...")
+
+        response = curio_retrieve_an_audit(event_id)
+
+        logger.debug(f"curio_retrieve_an_audit() completed.")
+
+        logger.debug(f"{response}")
+        logger.debug(f"{type(response)}")
+
+
+def list_filters():
+
+    # Listing Available Target Kinds and Action Keys
+    logger.debug(f"Calling curio_list_filters() ...")
+
+    response = curio_list_filters()
+
+    logger.debug(f"curio_list_filters() completed.")
+
+    ## return value
+    logger.debug(f"{response}")
+    logger.debug(f"{type(response)}")
+
+
+# for the execution of this script only
+def main():
+    list_audit()
+    retrieve_a_audit()
+    list_filters()
 
 if __name__ == "__main__":
     main()

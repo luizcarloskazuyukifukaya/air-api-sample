@@ -58,9 +58,23 @@ logger.debug(f"Current Logging Level is {level}")
 # *******************
 # SUCCESS
 # {
-#     "total_count": 14,
-#     "total_number": 126,
-#     "total_size": 184925196
+# 	"profiles": [
+# 		{
+# 			"id": "default",
+# 			"name": "default",
+# 			"description": "default profile"
+# 		},
+# 		{
+# 			"id": "5f34150bbcf4bbc4903a5546470bf4b3",
+# 			"name": "JRG Extractor Profile",
+# 			"description": "This profile will be for compliance analyzation"
+# 		},
+# 		{
+# 			"id": "5f3fb8f46d91b2bdbb2249fd8b817ebb",
+# 			"name": "New Extractor Profile",
+# 			"description": "Profile for test container"
+# 		}
+# 	]
 # }
 # FAIL
 # {} # NULL (dictionary)
@@ -68,7 +82,7 @@ logger.debug(f"Current Logging Level is {level}")
 #############################################################################
 def curio_list_extractors():
 
-    #GET /api/data/h2/extractor-profiles
+    # GET /api/data/h2/extractor-profiles
     api_method = "GET"
     api_url = "/api/data/h2/extractor-profiles"
 
@@ -81,6 +95,44 @@ def curio_list_extractors():
     logger.debug(f"get_data({api_url}) called")
 
     return response
+
+
+#############################################################################
+# Listing All Enabled Extractors for a Profile
+# -----------------------------------------
+# Listing All Enabled Extractors for a Profile
+# =========================================
+# *******************
+#  Parameters
+# *******************
+# Input parameter
+# id: Profile id
+# *******************
+#  Return value
+# This call returns a list of all currently enabled extractors within the requested extractor profile as well as the individual extractor id(s).
+# *******************
+# SUCCESS
+# TODO
+# FAIL
+# {} # NULL (dictionary)
+#
+#############################################################################
+def curio_list_extractors_for_profile(id):
+
+    # GET /api/data/h2/extractor-profiles/{id}
+    api_method = "GET"
+    api_url = "/api/data/h2/extractor-profiles/{}".format(id)
+
+    response = {}
+
+    logger.debug(f" Input parameter : {id}")
+
+    response = curio_get_data(url=api_url)
+
+    logger.debug(f"get_data({api_url}) called")
+
+    return response
+
 
 # # Example usage
 # @rest_request(method='GET')
@@ -102,17 +154,40 @@ def curio_list_extractors():
 
 
 # for the execution of this script only
-def main():
-    
+def list_extractors():
+
     logger.debug(f"Calling curio_list_extractors ...")
 
     response = curio_list_extractors()
 
     logger.debug(f"curio_list_extractors completed.")  
 
-    ## return value 
+    ## return value
     logger.debug(f"{response}");  
     logger.debug(f"{type(response)}");  
+
+
+def list_extractors_for_profile():
+    # Retrieve the profile id (first one) from response of list_extractors()
+    id = ""
+    r = curio_list_extractors()
+    if len(r):
+        # id = r["profiles"][0]["id"] # [0] is always "default"
+        id = r["profiles"][1]["id"]  # other than the "default", if exists
+
+        logger.debug(f"Calling curio_list_extractors_for_profile ...")
+
+        response = curio_list_extractors_for_profile(id)
+
+        logger.debug(f"curio_list_extractors_for_profile completed.")
+
+        ## return value
+        logger.debug(f"{response}")
+        logger.debug(f"{type(response)}")
+
+def main():
+    list_extractors()
+    list_extractors_for_profile()
 
 if __name__ == "__main__":
     main()
