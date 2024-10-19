@@ -39,20 +39,24 @@ logger.debug(f"Current Logging Level is {level}")
 
 ## Wasabi AiR specific URL
 # -----------------------------------------------
-# Create the API Key for Wasabi AiR API access
-# https://docs.wasabi.com/docs/api-keys
+# Updating a User Password
+# https://docs.wasabi.com/docs/users-and-groups-api
 # -----------------------------------------------
 
 #############################################################################
-# Create the API Key for Wasabi AiR API access
+# Updating a User Password
 # -----------------------------------------
-# Create the API Key for Wasabi AiR API access
+# Updating a user own password
+# [IMPORTANT]
+# This API can be used only to change the password for the user who is currently logged in. 
+# Administrators cannot use this API to change other users’ passwords.
 # =========================================
 # *******************
 #  Parameters
 # *******************
 # Input parameter
-# name : Name of the key to be created
+# id: User ID
+# password: New user password
 # *******************
 #  Return value
 # *******************
@@ -66,27 +70,29 @@ logger.debug(f"Current Logging Level is {level}")
 #
 # =========================================
 # Example:
-# TODO
+#   result = curio_update_password(id, password)
+#
 #############################################################################
-def curio_create_key(name):
+def curio_update_password(id, password):
 
-    # POST /api/data/search
-    api_method = "POST"
-    api_url = "/api/data/api-keys"
+    # PUT /api/data/users/{id}/password
+    api_method = "PUT"
+    api_url = f"/api/data/users/{id}/password"
 
     response = {}
+    if len(password) == 0:
+        # Missing mandatory parameters
+        return response
 
-    query = {
-        "name": "",  # string    (MANDATORY: search query)
+    payload = {
+        "password": password,  # string    (MANDATORY: search query)
     }
+    
+    logger.debug(f" Input parameter : {id} , {password}")
+    logger.debug(f" URL : {api_url}")
+    logger.debug(f" body : {payload}")
 
-    if len(name) == 0:
-        name = "kfukaya"    
-    query["name"] = name
-
-    logger.debug(f" Input parameter : {name}")
-
-    response = curio_post_data(url=api_url, body=query)
+    response = curio_put_data(url=api_url, body=payload)
 
     logger.debug(f"post_data({api_url}) called")
 
@@ -114,12 +120,17 @@ def curio_create_key(name):
 
 # for the execution of this script only
 def main():
+    # User ID
+    # i = "67126201b10c9abfb41d7c1b8c764d12"
+    i = "67130cd75864ed1a8832cf61b48b0d38"
+    # New password
+    p = "admin12345"
 
-    logger.debug(f"Calling curio_create_key() ...")
+    logger.debug(f"Calling curio_update_password() ...")
 
-    response = curio_create_key("My New Key 2")
+    response = curio_update_password(i, p)
 
-    logger.debug(f"curio_create_key() completed.")  
+    logger.debug(f"curio_update_password() completed.")  
 
     ## return value
     logger.debug(f"{response}");  

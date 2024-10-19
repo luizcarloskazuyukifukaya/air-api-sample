@@ -72,7 +72,7 @@ logger.debug(f"Current Logging Level is {level}")
 # {} # NULL (dictionary)
 #
 #############################################################################
-def curio_retrieve_duplicate(limit):
+def curio_get_non_deleted_faces(limit):
 
     #GET /api/data/v3/faces?limit=10
     api_method = "GET"
@@ -85,7 +85,7 @@ def curio_retrieve_duplicate(limit):
             limit = 5000
     else:
         limit = 5000
-    api_url_with_param = f'{api_url}{limit}' 
+    api_url_with_param = api_url.format(str(limit))
     
     response = {}
     
@@ -120,11 +120,11 @@ def curio_retrieve_duplicate(limit):
 # for the execution of this script only
 def main():
     
-    logger.debug(f"Calling  curio_retrieve_duplicate() ...")
+    logger.debug(f"Calling  curio_get_non_deleted_faces() ...")
 
-    response =  curio_retrieve_duplicate(5)
+    response =  curio_get_non_deleted_faces(50)
 
-    logger.debug(f" curio_retrieve_duplicate() completed.")  
+    logger.debug(f" ccurio_get_non_deleted_faces() completed.")  
 
     ## return value 
     logger.debug(f"{response}");  
