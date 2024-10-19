@@ -9,7 +9,7 @@
 # FAILED TO UPDATE ITS OWN PASSWORD
 # FAILED TO UPDATE WITH ADMIN USER (admin@wasabi.com, Root User neither)
 
-from curio_tools import rest_request
+from curio_tools import curio_rest_request
 from curio_tools import (
     curio_get_data,
     curio_post_data,
@@ -54,7 +54,7 @@ logger.debug(f"Current Logging Level is {level}")
 # -----------------------------------------
 # Updating a user own password
 # [IMPORTANT]
-# This API can be used only to change the password for the user who is currently logged in. 
+# This API can be used only to change the password for the user who is currently logged in.
 # Administrators cannot use this API to change other users’ passwords.
 # =========================================
 # *******************

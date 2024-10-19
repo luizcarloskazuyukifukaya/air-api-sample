@@ -3,7 +3,7 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-from curio_tools import rest_request
+from curio_tools import curio_rest_request
 from curio_tools import (
     curio_get_data,
     curio_post_data,
@@ -68,19 +68,19 @@ logger.debug(f"Current Logging Level is {level}")
 # *******************
 # SUCCESS
 # {
-#   'id': '67130cd75864ed1a8832cf61b48b0d38', 
-#   'email': 'hhashimoto@wasabi.com', 
-#   'first_name': 'Hiroshi', 
-#   'last_name': 'Hashimoto', 
-#   'enabled': True, 
-#   'created_at': '2024-10-19T01: 35: 19.153604Z', 
-#   'updated_at': '2024-10-19T01: 35: 19.153604Z', 
-#   'groups': 
-#     {'count': 0, 
+#   'id': '67130cd75864ed1a8832cf61b48b0d38',
+#   'email': 'hhashimoto@wasabi.com',
+#   'first_name': 'Hiroshi',
+#   'last_name': 'Hashimoto',
+#   'enabled': True,
+#   'created_at': '2024-10-19T01: 35: 19.153604Z',
+#   'updated_at': '2024-10-19T01: 35: 19.153604Z',
+#   'groups':
+#     {'count': 0,
 #       'shortlist': None
-#     }, 
-#     'avatar': '', 
-#     'role_id': 'default-user', 
+#     },
+#     'avatar': '',
+#     'role_id': 'default-user',
 #     'company_uid': ''
 # }
 # FAIL
@@ -89,13 +89,13 @@ logger.debug(f"Current Logging Level is {level}")
 # =========================================
 # Example:
 # newUserInfo =
-    # {
-    # "email": "kfukaya@wasabi.com",    # string    (MANDATORY: User email address)
-    # "first_name": "Kazuyuki",    # string    (OPTIONAL: User First name) [""]
-    # "last_name": "FUKAYA",    # string    (OPTIONAL: User Last name) [""]
-    # "password": "",    # string    (OPTIONAL: User Password) [user's email]
-    # "role_id": "",    # string    (OPTIONAL: "default-user" | "root" )
-    # }
+# {
+# "email": "kfukaya@wasabi.com",    # string    (MANDATORY: User email address)
+# "first_name": "Kazuyuki",    # string    (OPTIONAL: User First name) [""]
+# "last_name": "FUKAYA",    # string    (OPTIONAL: User Last name) [""]
+# "password": "",    # string    (OPTIONAL: User Password) [user's email]
+# "role_id": "",    # string    (OPTIONAL: "default-user" | "root" )
+# }
 # result = curio_create_user(newUserInfo)
 #
 #############################################################################

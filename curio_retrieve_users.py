@@ -3,7 +3,7 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-from curio_tools import rest_request
+from curio_tools import curio_rest_request
 from curio_tools import (
     curio_get_data,
     curio_post_data,

@@ -18,7 +18,7 @@ os.environ["SSLKEYLOGFILE"] = "ssl-key.log"
 DEFAULT_CURIO_PROFILE = "tokyo"
 
 # define decorator for REST API calls
-def rest_request(method='GET'):
+def curio_rest_request(method='GET'):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -77,35 +77,35 @@ def rest_request(method='GET'):
         return wrapper
     return decorator
 
-# Curio GET, POST, PUT, DELETE REST API CALL
+# Curio GET, POST, PUT, PATCH and DELETE REST API CALL
 # URI to be specified along with the body, if any
-@rest_request(method='GET')
+@curio_rest_request(method='GET')
 def curio_get_data(url):
     pass
 
-@rest_request(method='POST')
+@curio_rest_request(method='POST')
 def curio_post_data(url, body):
     pass
 
-@rest_request(method='PUT')
+@curio_rest_request(method='PUT')
 def curio_put_data(url, body):
     pass
 
-@rest_request(method="PATCH")
+@curio_rest_request(method="PATCH")
 def curio_patch_data(url, body):
     pass
 
-@rest_request(method="DELETE")
+@curio_rest_request(method="DELETE")
 def curio_delete_data(url):
     pass
 
 # # Using the decorated functions
 # List Keys
 # https://docs.wasabi.com/docs/api-keys
-# get_result = get_data(url='/api/data/api-keys')
+# get_result = curio_get_data(url='/api/data/api-keys')
 # if get_result:
 #     print("GET Result:", get_result)
 
-# post_result = post_data(url='/api/data/api-keys', body={'key': 'value'})
+# post_result = curio_post_data(url='/api/data/api-keys', body={'key': 'value'})
 # if post_result:
 #     print("POST Result:", post_result)

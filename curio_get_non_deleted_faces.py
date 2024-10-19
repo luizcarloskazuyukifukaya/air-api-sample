@@ -4,17 +4,12 @@
 # ======================================
 
 
-
-
 # ************************
 # WORKING IN PROGRESS
 # ************************
 
 
-
-
-
-from curio_tools import rest_request
+from curio_tools import curio_rest_request
 from curio_tools import (
     curio_get_data,
     curio_post_data,
@@ -76,7 +71,7 @@ def curio_get_non_deleted_faces(limit):
 
     #GET /api/data/v3/faces?limit=10
     api_method = "GET"
-    api_url = "GET /api/data/v3/faces?limit="
+    api_url = "/api/data/v3/faces?limit="
     
     if isinstance(limit, int):
         if limit > 5000:
@@ -122,7 +117,7 @@ def main():
     
     logger.debug(f"Calling  curio_get_non_deleted_faces() ...")
 
-    response =  curio_get_non_deleted_faces(50)
+    response =  curio_get_non_deleted_faces(500)
 
     logger.debug(f" ccurio_get_non_deleted_faces() completed.")  
 
