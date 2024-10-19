@@ -12,7 +12,10 @@ import os
 os.environ["SSLKEYLOGFILE"] = "ssl-key.log"
 
 # The default profile to be used
-DEFAULT_CURIO_PROFILE = 'wasabi'
+# DEFAULT_CURIO_PROFILE = "wasabi"
+# DEFAULT_CURIO_PROFILE = "kfukaya"
+# DEFAULT_CURIO_PROFILE = "hhashimoto"
+DEFAULT_CURIO_PROFILE = "tokyo"
 
 # define decorator for REST API calls
 def rest_request(method='GET'):
@@ -46,6 +49,10 @@ def rest_request(method='GET'):
             url = '{}{}'.format(api_endpoint, api_url)
             body = kwargs.get('body', {})
             headers = api_head
+
+            print(f"ENDPOINT : {api_endpoint}")
+            print(f"API URI: {api_url}")
+            print(f"URL: {url}")
 
             try:
                 if method == 'GET':

@@ -53,12 +53,14 @@ logger.debug(f"Current Logging Level is {level}")
 # *******************
 # Input parameter
 # New User Information
+# *** IMPORTANT ***
+# "password" can not be updated - it will be ignored! No Changes.
 # dict
 # {
-#   "email": "",    # string    (MANDATORY: User email address)
+#   'id': '67130cd75864ed1a8832cf61b48b0d38', # (MANDATORY: user id)
+#   "email": "",    # string    (OPTIONAL: User email address)
 #   "first_name": "",    # string    (OPTIONAL: User First name) [""]
 #   "last_name": "",    # string    (OPTIONAL: User Last name) [""]
-#   "password": "",    # string    (OPTIONAL: User Password) [user's email]
 #   "role_id": "",    # string    (OPTIONAL: "default-user" | "root" )
 # }
 # *******************
@@ -66,19 +68,19 @@ logger.debug(f"Current Logging Level is {level}")
 # *******************
 # SUCCESS
 # {
-#   'id': '67130cd75864ed1a8832cf61b48b0d38', 
-#   'email': 'hhashimoto@wasabi.com', 
-#   'first_name': 'Hiroshi', 
-#   'last_name': 'Hashimoto', 
-#   'enabled': True, 
-#   'created_at': '2024-10-19T01: 35: 19.153604Z', 
-#   'updated_at': '2024-10-19T01: 35: 19.153604Z', 
-#   'groups': 
-#     {'count': 0, 
+#   'id': '67130cd75864ed1a8832cf61b48b0d38',
+#   'email': 'hhashimoto@wasabi.com',
+#   'first_name': 'Hiroshi',
+#   'last_name': 'Hashimoto',
+#   'enabled': True,
+#   'created_at': '2024-10-19T01: 35: 19.153604Z',
+#   'updated_at': '2024-10-19T01: 35: 19.153604Z',
+#   'groups':
+#     {'count': 0,
 #       'shortlist': None
-#     }, 
-#     'avatar': '', 
-#     'role_id': 'default-user', 
+#     },
+#     'avatar': '',
+#     'role_id': 'default-user',
 #     'company_uid': ''
 # }
 # FAIL
@@ -87,13 +89,13 @@ logger.debug(f"Current Logging Level is {level}")
 # =========================================
 # Example:
 # updatedUserInfo =
-    # {
-    # "email": "kfukaya@wasabi.com",    # string    (MANDATORY: User email address)
-    # "first_name": "Kazuyuki",    # string    (OPTIONAL: User First name) [""]
-    # "last_name": "FUKAYA",    # string    (OPTIONAL: User Last name) [""]
-    # "password": "",    # string    (OPTIONAL: User Password) [user's email]
-    # "role_id": "",    # string    (OPTIONAL: "default-user" | "root" )
-    # }
+# {
+# "id": "67130cd75864ed1a8832cf61b48b0d38" # (MANDATORY: user id)
+# "email": "new@email.com",    # string    (OPTIONAL: New User Email Address)
+# "first_name": "Kazuyuki",    # string    (OPTIONAL: User First name)
+# "last_name": "FUKAYA",    # string    (OPTIONAL: User Last name)
+# "role_id": "",    # string    (OPTIONAL: "default-user" | "root" )
+# }
 # result = curio_update_user(updatedUserInfo)
 #
 #############################################################################
@@ -111,7 +113,7 @@ def curio_update_user(info):
 
     # PATCH /api/data/users/{id}
     api_method = "PATCH"
-    api_url = f"PATCH /api/data/users/{user_id}"
+    api_url = f"/api/data/users/{user_id}"
     
     # Other parameters (just add all that have been provided)
     keyList = list(info.keys())
@@ -153,12 +155,13 @@ def curio_update_user(info):
 def main():
     # create user
     param = {
-        "id": "67130cd75864ed1a8832cf61b48b0d38", # string (MANDATORY: user id)
-        # "email": "hhashimoto@wasabi.com",    # string (CANNOT CHANGE???)
-        "first_name": "Hiroshi",    # string    (OPTIONAL: User First name) [""]
-        "last_name": "HASHIMOTO",    # string    (OPTIONAL: User Last name) [""]
-        # "password": "Wasabi123!",    # string    (OPTIONAL: User Password) [user's email]
-        # "role_id": "root",    # string    (OPTIONAL: "default-user" | "root" )
+        "id": "67130cd75864ed1a8832cf61b48b0d38",  # string (MANDATORY: user id)
+        "email": "hhashimoto@wasabi.com",  # string (YES YOU CAN CHANGE THE EMAIL)
+        "first_name": "Hiroshi",  # string    (OPTIONAL: User First name) [""]
+        "last_name": "HASHIMOTO",  # string    (OPTIONAL: User Last name) [""]
+        ### IMPORTANT (PASSWORD CAN NOT BE UPDATE)
+        # "password": "Wasabi123!",    # string    (OPTIONAL: User Password) [user's email] (NOT POSSIBLE)
+        "role_id": "root",  # string    (OPTIONAL: "default-user" | "root" )
     }
 
     logger.debug(f"Calling curio_update_user() ...")

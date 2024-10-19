@@ -3,6 +3,12 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
+# *********************************
+# TODO
+# NOT SUCCESSUFLY EXECUTED THE PASSWORD UPDATE
+# FAILED TO UPDATE ITS OWN PASSWORD
+# FAILED TO UPDATE WITH ADMIN USER (admin@wasabi.com, Root User neither)
+
 from curio_tools import rest_request
 from curio_tools import (
     curio_get_data,
@@ -121,8 +127,8 @@ def curio_update_password(id, password):
 # for the execution of this script only
 def main():
     # User ID
-    # i = "67126201b10c9abfb41d7c1b8c764d12"
-    i = "67130cd75864ed1a8832cf61b48b0d38"
+    # i = "67126201b10c9abfb41d7c1b8c764d12" #kfukaya@wasabi.com
+    i = "67130cd75864ed1a8832cf61b48b0d38" #hhashimoto@wasabi.com
     # New password
     p = "admin12345"
 
