@@ -217,79 +217,58 @@ def curio_harvest_an_container(containerInfo):
     return response
 
 
-# # Example usage
-# @rest_request(method='GET')
-# def curio_get_data(url):
-#     pass
-
-# @rest_request(method='POST')
-# def curio_post_data(url, body):
-#     pass
-
-# # Using the decorated functions
-# get_result = get_data(url='/api/data/user-keys')
-# if curio_get_result:
-#     print("GET Result:", get_result)
-
-# post_result = post_data(url='/api/data/search', body={'key': 'value'})
-# if curio_post_result:
-#     print("POST Result:", post_result)
-
 # ALL Wasabi AiR Extrators
 ALL_EXTRACTOR_LIST = [
-  "archive",
-  "audioinfo",
-  "audio_previews",
-  "audiopeak",
-  "black_scenes",
-  "caption_files",
-  "captionsv2",
-  "slates",
-  "gm_color_bars",
-  "credits",
-  "csv",
-  "dbf",
-  "gm_digital_slates",
-  "document_pages",
-  "dpx",
-  "drm",
-  "email",
-  "captions",
-  "exiv2",
-  "fdx",
-  "geocoding",
-  "gm_audio_classification",
-  "gm_faces",
-  "hashes",
-  "html",
-  "json",
-  "gmlanguage",
-  "gmlogos",
-  "m2ts",
-  "mediainfo",
-  "mime_type",
-  "gmocr",
-  "officex",
-  "pdf",
-  "gm_silence",
-  "gms2t",
-  "gmsports",
-  "gm_start_end",
-  "stow",
-  "gm_texted",
-  "gm_textless",
-  "thumbnailer",
-  "tokens",
-  "video_main_frames",
-  "video_previews",
-  "volumedetect",
-  "weather",
-  "xml",
+    "archive",
+    "audioinfo",
+    "audio_previews",
+    "audiopeak",
+    "black_scenes",
+    "caption_files",
+    "captionsv2",
+    "slates",
+    "gm_color_bars",
+    "credits",
+    "csv",
+    "dbf",
+    "gm_digital_slates",
+    "document_pages",
+    "dpx",
+    "drm",
+    "email",
+    "captions",
+    "exiv2",
+    "fdx",
+    "geocoding",
+    "gm_audio_classification",
+    "gm_faces",
+    "hashes",
+    "html",
+    "json",
+    "gmlanguage",
+    "gmlogos",
+    "m2ts",
+    "mediainfo",
+    "mime_type",
+    "gmocr",
+    "officex",
+    "pdf",
+    "gm_silence",
+    "gms2t",
+    "gmsports",
+    "gm_start_end",
+    "stow",
+    "gm_texted",
+    "gm_textless",
+    "thumbnailer",
+    "tokens",
+    "video_main_frames",
+    "video_previews",
+    "volumedetect",
+    "weather",
+    "xml",
 ]
 # for the execution of this script only
-# ******************************
-# TODO -- NO EXTRACTOR !!!
-# ******************************
 def harvest_an_item():
     #
     # harvest an item
@@ -341,8 +320,8 @@ def harvest_an_container():
 
 
 def main():
-    harvest_an_item() # TODO
-    # harvest_an_container()
+    harvest_an_item()   # per item
+    # harvest_an_container()    # per bucket
 
 if __name__ == "__main__":
     main()

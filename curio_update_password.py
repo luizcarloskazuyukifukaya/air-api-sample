@@ -83,7 +83,7 @@ def curio_update_password(id, password):
 
     # PUT /api/data/users/{id}/password
     api_method = "PUT"
-    api_url = f"/api/data/users/{id}/password"
+    api_url = "/api/data/users/{}/password".format(id)
 
     response = {}
     if len(password) == 0:
@@ -105,32 +105,13 @@ def curio_update_password(id, password):
     return response
 
 
-# # Example usage
-# @rest_request(method='GET')
-# def curio_get_data(url):
-#     pass
-
-# @rest_request(method='POST')
-# def curio_post_data(url, body):
-#     pass
-
-# # Using the decorated functions
-# get_result = get_data(url='/api/data/user-keys')
-# if curio_get_result:
-#     print("GET Result:", get_result)
-
-# post_result = post_data(url='/api/data/search', body={'key': 'value'})
-# if curio_post_result:
-#     print("POST Result:", post_result)
-
-
 # for the execution of this script only
 def main():
     # User ID
-    # i = "67126201b10c9abfb41d7c1b8c764d12" #kfukaya@wasabi.com
-    i = "67130cd75864ed1a8832cf61b48b0d38" #hhashimoto@wasabi.com
+    i = "67126201b10c9abfb41d7c1b8c764d12" #kfukaya@wasabi.com
+    # i = "67130cd75864ed1a8832cf61b48b0d38" #hhashimoto@wasabi.com
     # New password
-    p = "admin12345"
+    p = "WasabiJapan"
 
     logger.debug(f"Calling curio_update_password() ...")
 

@@ -107,25 +107,6 @@ def curio_search(q):
     return response
 
 
-# # Example usage
-# @rest_request(method='GET')
-# def curio_get_data(url):
-#     pass
-
-# @rest_request(method='POST')
-# def curio_post_data(url, body):
-#     pass
-
-# # Using the decorated functions
-# get_result = get_data(url='/api/data/user-keys')
-# if curio_get_result:
-#     print("GET Result:", get_result)
-
-# post_result = post_data(url='/api/data/search', body={'key': 'value'})
-# if curio_post_result:
-#     print("POST Result:", post_result)
-
-
 # for the execution of this script only
 def main():
     # search query

@@ -13,9 +13,9 @@ os.environ["SSLKEYLOGFILE"] = "ssl-key.log"
 
 # The default profile to be used
 # DEFAULT_CURIO_PROFILE = "wasabi"
-# DEFAULT_CURIO_PROFILE = "kfukaya"
+DEFAULT_CURIO_PROFILE = "kfukaya"
 # DEFAULT_CURIO_PROFILE = "hhashimoto"
-DEFAULT_CURIO_PROFILE = "tokyo"
+# DEFAULT_CURIO_PROFILE = "tokyo"
 
 # define decorator for REST API calls
 def curio_rest_request(method='GET'):
