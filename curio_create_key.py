@@ -3,7 +3,7 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-from curio_tools import curio_rest_request
+from curio_tools import curio_rest_request, curio_set_profile
 from curio_tools import (
     curio_get_data,
     curio_post_data,
@@ -47,6 +47,7 @@ logger.debug(f"Current Logging Level is {level}")
 # Create the API Key for Wasabi AiR API access
 # -----------------------------------------
 # Create the API Key for Wasabi AiR API access
+# IMPORTANT: 500 is returned if the key name already exist.
 # =========================================
 # *******************
 #  Parameters
@@ -81,7 +82,7 @@ def curio_create_key(name):
     }
 
     if len(name) == 0:
-        name = "kfukaya"    
+        name = "New API Key"    
     query["name"] = name
 
     logger.debug(f" Input parameter : {name}")
@@ -95,10 +96,14 @@ def curio_create_key(name):
 
 # for the execution of this script only
 def main():
+    # Switch profile here otherwise "default" is used
+    # curio_set_profile("hhashimoto")
+    # curio_set_profile("tokyo")
+    # curio_set_profile("wasabi")
 
     logger.debug(f"Calling curio_create_key() ...")
 
-    response = curio_create_key("My New Key 2")
+    response = curio_create_key("Backup API Key (NEW)")
 
     logger.debug(f"curio_create_key() completed.")  
 

@@ -27,7 +27,7 @@ global GBL_CURIO_LOG_LEVEL
 
 GBL_CURIO_LOG_LEVEL = 10
 # Global Profile defined here
-DEFAULT_CURIO_PROFILE = "wasabi"
+DEFAULT_CURIO_PROFILE = "default"
 DEFAULT_CURIO_CONF_SUB_PATH = "/.wasabi/"
 
 # Create logger object

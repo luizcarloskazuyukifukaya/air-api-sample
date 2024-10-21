@@ -91,7 +91,7 @@ def curio_search(q):
         "limit": 25,
         "hit_counts": {},
     }
-    
+
     if "query" in q:
         query["query"] = q["query"]
     else:
@@ -102,16 +102,65 @@ def curio_search(q):
 
     response = curio_post_data(url=api_url, body=query)
 
-    logger.debug(f"post_data({api_url}) called")
+    logger.debug(f"curio_post_data({api_url}) called")
+
+    return response
+
+# *** TODO ***********************************
+# HTTP Request Error: 404 Client Error: Not Found for url: https://tokyo.metafarm.dev/api/v3/search/analytics
+# DEBUG:__main__:curio_get_data(/api/v3/search/analytics) called
+# *** TODO ***********************************
+#############################################################################
+# Search the Analytics in Wasabi AiR
+# -----------------------------------------
+# Search the Analytics in Wasabi AiR
+# =========================================
+# *******************
+#  Parameters
+# *******************
+# Input parameter
+# NONE
+# *******************
+#  Return value
+# *******************
+# SUCCESS
+# {
+# TODO
+#   "results": []
+# }
+# FAIL
+# {} # NULL (dictionary)
+#
+# =========================================
+# Example:
+#   searchQuery = {
+#       "query": "ship",
+#   }
+#   result = search_query(**searchQuery)
+#
+#############################################################################
+def curio_search_analytics():
+
+    # GET /api/v3/search/analytics
+    api_method = "GET"
+    api_url = "/api/v3/search/analytics"
+
+    response = {}
+    logger.debug(f" Input parameter : NONE")
+
+    response = curio_get_data(url=api_url)
+
+    logger.debug(f"curio_get_data({api_url}) called")
 
     return response
 
 
 # for the execution of this script only
-def main():
+def search_query(queryText):
     # search query
+    logger.debug(f"Search for {queryText} ...")
     param = {
-        "query": "wasabi log",  # string    (MANDATORY: search query)
+        "query": queryText.format(),  # string    (MANDATORY: search query)
         "page": 0,
         "limit": 25,
         "hit_counts": {},
@@ -126,6 +175,27 @@ def main():
     ## return value
     logger.debug(f"{response}");  
     logger.debug(f"{type(response)}");  
+
+
+def search_analytics():
+    # search analytics
+    logger.debug(f"Calling curio_search_analytics() ...")
+
+    response = curio_search_analytics()
+
+    logger.debug(f"curio_search_analytics() completed.")
+
+    ## return value
+    logger.debug(f"{response}")
+    logger.debug(f"{type(response)}")
+
+def main():
+    # AND search
+    # queryText = '\"clever cat\"'
+    # OR search
+    queryText = "clever cat"
+    search_query(queryText)
+    # search_analytics()
 
 if __name__ == "__main__":
     main()

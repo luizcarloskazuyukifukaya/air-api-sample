@@ -3,7 +3,7 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-from curio_tools import curio_rest_request
+from curio_tools import curio_rest_request, curio_set_profile
 from curio_tools import (
     curio_get_data,
     curio_post_data,
@@ -108,14 +108,19 @@ def curio_list_keys():
 
 # for the execution of this script only
 def main():
-    
+    # Switch profile here otherwise "default" is used
+    # curio_set_profile("hhashimoto")
+    # curio_set_profile("tokyo")
+    # curio_set_profile("wasabi")
+    curio_set_profile("kfukaya")
+
     logger.debug(f"Calling curio_list_keys() ...")
 
     response = curio_list_keys()
 
     logger.debug(f"curio_list_keys() completed.")  
 
-    ## return value 
+    ## return value
     logger.debug(f"{response}");  
     logger.debug(f"{type(response)}");  
 

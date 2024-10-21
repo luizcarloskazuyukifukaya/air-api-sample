@@ -2,6 +2,7 @@
 # Python Sample for Wasabi AiR
 # No guaranty from Wasabi Inc.
 # ======================================
+
 from curio_tools import curio_rest_request, curio_set_profile
 from curio_tools import (
     curio_get_data,
@@ -38,62 +39,53 @@ logger.debug(f"Current Logging Level is {level}")
 
 ## Wasabi AiR specific URL
 # -----------------------------------------------
-# Updating a User Password
-# https://docs.wasabi.com/docs/users-and-groups-api
+# Create the API Key for Wasabi AiR API access
+# https://docs.wasabi.com/docs/api-keys
 # -----------------------------------------------
 
 #############################################################################
-# Updating a User Password
+# Permanently delete a key
 # -----------------------------------------
-# Updating a user own password
-# [IMPORTANT]
-# This API can be used only to change the password for the user who is currently logged in.
-# Administrators cannot use this API to change other users’ passwords.
+# When you are no longer using an API key, it is recommended that you revoke it:
+# DELETE /api/data/api-keys/{key-id}
+# key-id - (string) The API Key ID (not the JWT itself)
+# -----------------------------------------
+# Create the API Key for Wasabi AiR API access
+# IMPORTANT: Future requests using that key will not work.
 # =========================================
 # *******************
 #  Parameters
 # *******************
 # Input parameter
-# id: User ID
-# password: New user password
+# id : Key Id
 # *******************
 #  Return value
 # *******************
 # SUCCESS
 # {
-# TODO
-#   "results": []
+#   "ok": True
 # }
 # FAIL
 # {} # NULL (dictionary)
 #
 # =========================================
 # Example:
-#   result = curio_update_password(id, password)
-#
+# key_id = "c7e7f6ff2e5c236dcc3a784f524ca5c536a56385bddec19bfeef5cd951d1522b"
+# response = curio_delete_key(key_id)
 #############################################################################
-def curio_update_password(id, password):
+def curio_delete_key(key_id):
 
-    # PUT /api/data/users/{id}/password
-    api_method = "PUT"
-    api_url = "/api/data/users/{}/password".format(id)
+    # DELETE /api/data/api-keys/{key-id}
+    api_method = "DELETE"
+    api_url = "/api/data/api-keys/{}".format(key_id)
 
     response = {}
-    if len(password) == 0:
-        # Missing mandatory parameters
-        return response
 
-    payload = {
-        "password": password,  # string    (MANDATORY: search query)
-    }
-    
-    logger.debug(f" Input parameter : {id} , {password}")
-    logger.debug(f" URL : {api_url}")
-    logger.debug(f" body : {payload}")
+    logger.debug(f" Input parameter : {key_id}")
 
-    response = curio_put_data(url=api_url, body=payload)
+    response = curio_delete_data(url=api_url)
 
-    logger.debug(f"post_data({api_url}) called")
+    logger.debug(f"curio_delete_data({api_url}) called")
 
     return response
 
@@ -104,18 +96,14 @@ def main():
     # curio_set_profile("hhashimoto")
     # curio_set_profile("tokyo")
     # curio_set_profile("wasabi")
+    # curio_set_profile("kfukaya")
 
-    # User ID
-    i = "67126201b10c9abfb41d7c1b8c764d12" #kfukaya@wasabi.com
-    # i = "67130cd75864ed1a8832cf61b48b0d38" #hhashimoto@wasabi.com
-    # New password
-    p = "WasabiJapan"
+    key_id = "c7e7f6ff2e5c236dcc3a784f524ca5c536a56385bddec19bfeef5cd951d1522b"
+    logger.debug(f"Calling curio_delete_key() ...")
 
-    logger.debug(f"Calling curio_update_password() ...")
+    response = curio_delete_key(key_id)
 
-    response = curio_update_password(i, p)
-
-    logger.debug(f"curio_update_password() completed.")  
+    logger.debug(f"curio_delete_key() completed.")  
 
     ## return value
     logger.debug(f"{response}");  

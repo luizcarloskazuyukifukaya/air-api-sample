@@ -8,14 +8,21 @@ import requests
 import json
 import os
 
+# Retrieve Wasabi AiR Environment specific variables
+from curio_config import parse_conf # type: ignore
+
 # Set environment variable for SSL key log file
 os.environ["SSLKEYLOGFILE"] = "ssl-key.log"
 
 # The default profile to be used
-# DEFAULT_CURIO_PROFILE = "wasabi"
-DEFAULT_CURIO_PROFILE = "kfukaya"
-# DEFAULT_CURIO_PROFILE = "hhashimoto"
-# DEFAULT_CURIO_PROFILE = "tokyo"
+DEFAULT_CURIO_PROFILE = "default"
+
+# Change profile from default to specific one
+# IMPORTANT: the profile should be defined on ~/.wasabi/curio.conf
+def curio_set_profile(profile_name):
+    global DEFAULT_CURIO_PROFILE  # Declare the variable as global
+    print(f"Set profile to {profile_name}")
+    DEFAULT_CURIO_PROFILE = profile_name
 
 # define decorator for REST API calls
 def curio_rest_request(method='GET'):
@@ -23,11 +30,11 @@ def curio_rest_request(method='GET'):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
 
-            # Retrieve Wasabi AiR Environment specific variables
-            from curio_config import parse_conf # type: ignore
-
             # read CURIO config file (~/.wasabi/curio.conf)
-            # TODO
+            # Refer to the global variable defined for the profile
+            global DEFAULT_CURIO_PROFILE  # Declare the variable as global
+            # profile to be used can be changed by curio_set_profile
+
             api_conf = parse_conf(DEFAULT_CURIO_PROFILE)
 
             api_endpoint = api_conf['endpoint']
@@ -53,6 +60,8 @@ def curio_rest_request(method='GET'):
             print(f"ENDPOINT : {api_endpoint}")
             print(f"API URI: {api_url}")
             print(f"URL: {url}")
+            print(f"HEADER: {headers}")
+            print(f"BODY: {body}")
 
             try:
                 if method == 'GET':
@@ -65,6 +74,8 @@ def curio_rest_request(method='GET'):
                     response = requests.patch(url, data=json.dumps(body), headers=headers)
                 elif method == "DELETE":
                     response = requests.delete(url, headers=headers)
+                elif method == "OPTIONS":
+                    response = requests.options(url, headers=headers)
                 else:
                     raise ValueError(f"Unsupported HTTP method: {method}")
 
@@ -97,6 +108,10 @@ def curio_patch_data(url, body):
 
 @curio_rest_request(method="DELETE")
 def curio_delete_data(url):
+    pass
+
+@curio_rest_request(method="OPTIONS")
+def curio_options_data(url):
     pass
 
 # # Using the decorated functions
