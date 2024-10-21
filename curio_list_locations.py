@@ -3,13 +3,15 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-from curio_tools import curio_rest_request
 from curio_tools import (
+    curio_set_profile,
+    curio_rest_request, 
     curio_get_data,
     curio_post_data,
     curio_put_data,
     curio_patch_data,
     curio_delete_data,
+    curio_options_data,
 )
 
 import requests
@@ -96,7 +98,9 @@ def curio_list_locations():
 
 # for the execution of this script only
 def main():
-
+    
+    curio_set_profile("wasabi")
+    
     logger.debug(f"Calling curio_list_locations() ...")
 
     response = curio_list_locations()
