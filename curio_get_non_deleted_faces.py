@@ -3,11 +3,6 @@
 # No guaranty from Wasabi Inc.
 # ======================================
 
-
-# ************************
-# WORKING IN PROGRESS
-# ************************
-
 from curio_tools import (
     curio_set_profile,
     curio_rest_request,
