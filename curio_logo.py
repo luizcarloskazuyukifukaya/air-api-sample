@@ -143,9 +143,9 @@ def list_logo_training():
     logger.debug(f"{response}")
     logger.debug(f"{type(response)}")
 
-
 def main():
     # check logo training possibility
+    curio_set_profile("usadmin")
     check_logo()
     # list of logo training requests
     list_logo_training()
