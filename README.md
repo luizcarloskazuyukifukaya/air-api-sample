@@ -2,8 +2,7 @@
 
 This is a sample of python code that can be positioned as a Wasabi AiR SDK for Python. It implements a high-level function wrapping the REST API call with a simple function call.
 
-It is based on [Wasabi AiR API Reference]
-(https://docs.wasabi.com/docs/wasabi-air-api-reference) which is officially published and maintenanced by Wasabi Technologies LLC.
+It is based on [Wasabi AiR API Reference](https://docs.wasabi.com/docs/wasabi-air-api-reference) which is officially published and maintenanced by Wasabi Technologies LLC.
 
 ## Profile and Wasabi AiR SDK configurations
 Just like the AWS CLI credentials file, Wasabi AiR SDK config file is introduced.
